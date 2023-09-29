@@ -23,7 +23,13 @@ app.get("/", (req, res) => {
 app.get("/working", (req, res) => {
   res.status(200).send("seemsToBeWorking...ig!");
 });
-
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Update with your frontend URL
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); // Add the allowed HTTP methods
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Add the allowed headers
+  res.setHeader('Access-Control-Allow-Credentials', 'true'); // Allow credentials, if needed
+  next();
+});
 async function connectDb() {
   const conn = await mongoose.connect(DB_URL);
   const db = mongoose.connection;
